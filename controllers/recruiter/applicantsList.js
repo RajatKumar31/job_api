@@ -42,7 +42,7 @@ const applicantsList = async (req, res) => {
             $first: "$jobTitle",
           },
           jobId: { $first: "$jobId" },
-          jobDescription: { $first: "$job.description" },
+          jobDescription: { $first: "$jobDescription" },
           applicants: {
             $push: {
               candidateId: "$candidateId",

@@ -1,4 +1,4 @@
-Squareboat interview task:-
+Squareboat Interview Task:-
 
 Tech Stack Used :-
 Backend : Nodejs, Express.js

@@ -1,9 +1,35 @@
+const mongoose = require("mongoose");
 const appliedJobModel = require("../../models/appliedJob");
 
 const appliedJobList = async (req, res) => {
   try {
     const candidateId = req.decoded.candidateId;
-    const appliedJobs = await appliedJobModel.find({ candidateId });
+    const appliedJobs = await appliedJobModel.aggregate([
+      {
+        $match: {
+          candidateId: new mongoose.Types.ObjectId(candidateId),
+        },
+      },
+      {
+        $lookup: {
+          from: "jobs",
+          localField: "jobId",
+          foreignField: "_id",
+          as: "job",
+        },
+      },
+      {
+        $addFields: {
+          jobTitle: { $first: "$job.title" },
+          jobDescription: { $first: "$job.description" },
+        },
+      },
+      {
+        $project: {
+          job: 0,
+        },
+      },
+    ]);
     if (appliedJobs.length == 0) {
       return res.json({
         success: true,

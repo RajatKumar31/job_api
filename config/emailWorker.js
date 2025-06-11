@@ -8,6 +8,7 @@ const emailWorker = new Worker(
     try {
       console.log("Inside worker, email : ", email);
       // send email here
+      console.log("email send successfully");
     } catch (err) {
       console.log(err.message);
     }
